@@ -1,1 +1,80 @@
-<p>sign-up works!</p>
+<app-loader [showSpinner]="loading"></app-loader>
+<div class="main">
+  <div class="form__container">
+    <h1 class="form__title"><b>Regístrate</b></h1>
+    <div class="form__container--inner">
+      <div class="form__img-container">
+        <img src="../../../../assets/imgs/piggie-bank.svg" alt="Piggie bank">
+      </div>
+
+      <form class="form__inputs-container" [formGroup]="signUpForm" (submit)="signUp()">
+        <div>
+          <h3><b>Información personal</b></h3>
+          <div class="grid__col-2">
+            <app-input
+              [label]="'Nombre completo'"
+              [inputType]="'text'"
+              [placeholder]="'Nombre y apellido'"
+              formControlName="fullName"
+            />
+
+            <app-input
+              [label]="'Correo electrónico'"
+              [inputType]="'email'"
+              [placeholder]="'ejemplo@mail.com'"
+              formControlName="email"
+            />
+          </div>
+
+          <div class="grid__col-2">
+            <app-input
+              [label]="'Contraseña'"
+              [inputType]="'password'"
+              [placeholder]="'*******'"
+              formControlName="password"
+            />
+          </div>
+        </div>
+
+        <div>
+          <h3><b>Información financiera</b></h3>
+          <div class="grid__col-2">
+            <app-input
+              [label]="'Salario'"
+              [inputType]="'number'"
+              formControlName="salary"
+            />
+
+            <app-input
+              [label]="'Gastos fijos'"
+              [inputType]="'number'"
+              formControlName="mandatoryExpenses"
+            />
+          </div>
+
+          <div class="grid__col-2">
+            <app-input
+              [label]="'Otros gastos'"
+              [inputType]="'number'"
+              formControlName="otherExpenses"
+            />
+
+            <app-input
+              [label]="'Ahorro mensual'"
+              [inputType]="'number'"
+              formControlName="savings"
+            />
+          </div>
+        </div>
+
+        <app-button
+          [buttonDisabled]="signUpForm.invalid"
+          [buttonType]="'submit'"
+          [buttonText]="'Enviar'"
+          class="form__button"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+

@@ -1,1 +1,7 @@
-<p>button works!</p>
+<button class="button"
+  [type]="buttonType"
+  [disabled]="buttonDisabled"
+  [ngClass]="{'button-disabled': buttonDisabled}"
+  >
+  {{buttonText}}
+</button>
