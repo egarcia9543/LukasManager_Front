@@ -1,1 +1,9 @@
-<p>input works!</p>
+<mat-form-field appearance="outline">
+  <mat-label>{{label}}</mat-label>
+  <input
+    matInput
+    [type]="inputType"
+    [placeholder]="placeholder"
+    (input)="updateValue($event)"
+  >
+</mat-form-field>
