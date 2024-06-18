@@ -13,4 +13,9 @@ export interface User {
   reports?: [{}]
 };
 
+export interface UserCredentials {
+  email: string,
+  password: string,
+}
+
 

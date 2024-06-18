@@ -69,8 +69,8 @@ export class SignUpComponent {
       )
         .subscribe((user) => {
           this.loading = false;
-          this.router.navigate(['/dashboard']);
           sessionStorage.setItem('user', JSON.stringify(user.user));
+          this.router.navigate(['/dashboard']);
         });
     }
   }
