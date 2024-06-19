@@ -1,0 +1,38 @@
+.user {
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--initials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      background-color: #D63484
+      ;
+      color: #F8F4EC;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    &--info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5em;
+      margin-left: 1em;
+    }
+    &--name {
+      font-weight: 700;
+    }
+
+    &--logout {
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+}
