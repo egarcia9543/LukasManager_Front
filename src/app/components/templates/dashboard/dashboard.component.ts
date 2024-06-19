@@ -1,12 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../../interfaces/user.interface';
-import { CommonModule } from '@angular/common';
+import { SidebarComponent } from '../../molecules/sidebar/sidebar.component';
+import { UserInfoComponent } from '../../molecules/user-info/user-info.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [
+    RouterModule,
+    CommonModule,
+    SidebarComponent,
+    UserInfoComponent
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -19,11 +26,7 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('user') ?? '');
-    if (!this.user) {
-      this.router.navigate(['/sign-up']);
-    }
     this.userName = this.user.fullName;
-    console.log(this.user);
   }
 
 }

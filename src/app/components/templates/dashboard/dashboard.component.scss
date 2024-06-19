@@ -1,0 +1,27 @@
+.dashboard__wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  margin: auto;
+}
+
+.sidebar {
+  &__wrapper {
+    width: 15%;
+    position: relative;
+    border-right: solid 1px #402B3A;
+  }
+
+  &__bottom {
+    position: absolute;
+    bottom: 5%;
+    left: 20%;
+  }
+}
+
+.content {
+  &__wrapper {
+    width: 85%;
+    margin: 2em 2em;
+  }
+}

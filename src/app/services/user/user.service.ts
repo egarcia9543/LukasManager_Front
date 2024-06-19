@@ -2,13 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User, UserCredentials, UserResponseDto } from '../../interfaces/user.interface';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private baseUrl = 'http://localhost:3000';
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   public registerUser(userInfo: User): Observable<UserResponseDto> {
     return this.http.post<UserResponseDto>(`${this.baseUrl}/sign-up`, userInfo);
@@ -16,5 +20,14 @@ export class UserService {
 
   public signin(userCredentials: UserCredentials): Observable<UserResponseDto> {
     return this.http.post<UserResponseDto>(`${this.baseUrl}/login`, userCredentials)
+  };
+
+  public logout(): void {
+    sessionStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  };
+
+  public getUserInSession(): User {
+    return JSON.parse(sessionStorage.getItem('user') ?? '');
   };
 }

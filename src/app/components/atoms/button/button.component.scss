@@ -1,6 +1,6 @@
 .button {
-  background-color: #D76CD9;
-  color: #F2F2F2;
+  background-color: #FF9BD2;
+  color: #402B3A;
   border: none;
   border-radius: 20px;
   padding: 12px 40px;
@@ -9,7 +9,8 @@
   font-size: 14px;
 
   &:hover:not(.button-disabled) {
-    background-color: #8B458C;
+    background-color: #D63484;
+    color: #F8F4EC;
     cursor: pointer;
   }
 

@@ -1,0 +1,9 @@
+<div class="header">
+  <h2>Gestiona tu día a día</h2>
+  <mat-form-field color="accent">
+    <mat-label>Selecciona una fecha</mat-label>
+    <input matInput [matDatepicker]="picker" [value]="currentDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
