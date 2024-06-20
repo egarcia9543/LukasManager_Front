@@ -1,9 +1,27 @@
+<app-loader [showSpinner]="loading"/>
 <div class="header">
   <h2>Gestiona tu día a día</h2>
-  <mat-form-field color="accent">
-    <mat-label>Selecciona una fecha</mat-label>
-    <input matInput [matDatepicker]="picker" [value]="currentDate">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+  <form [formGroup]="reportFilter">
+    <app-input-calendar
+      label="Selecciona una fecha"
+      [maxDate]="currentDate"
+      [initialValue]="currentDate"
+      formControlName="date"
+      (ngModelChange)="getExpenseReport()"
+    />
+  </form>
+</div>
+<div class="content">
+  @if (dailyExpenses.length == 0) {
+    <p>No hay gastos registrados para el día seleccionado</p>
+  } @else {
+    <ul>
+      @for (expense of dailyExpenses; track $index) {
+        <li>
+          <span>{{ expense.description }}</span>
+          <span>{{ expense.amount }}</span>
+        </li>
+      }
+    </ul>
+  }
 </div>
