@@ -1,11 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InputCalendarComponent } from '../../atoms/input-calendar/input-calendar.component';
-import { ReportsService } from '../../../services/report/reports.service';
-import { UserService } from '../../../services/user/user.service';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Expense } from '../../../interfaces/expense.interface';
+import { ExpensesService } from '../../../services/expenses/expenses.service';
+import { UserService } from '../../../services/user/user.service';
+import { InputCalendarComponent } from '../../atoms/input-calendar/input-calendar.component';
 import { LoaderComponent } from '../../atoms/loader/loader.component';
+import { InputComponent } from '../../atoms/input/input.component';
+import { InputSelectComponent } from '../../atoms/input-select/input-select.component';
+import { ButtonComponent } from '../../atoms/button/button.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ExpenseListComponent } from '../../molecules/expense-list/expense-list.component';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +20,12 @@ import { LoaderComponent } from '../../atoms/loader/loader.component';
     CommonModule,
     ReactiveFormsModule,
     InputCalendarComponent,
-    LoaderComponent
+    InputComponent,
+    ButtonComponent,
+    InputSelectComponent,
+    LoaderComponent,
+    MatIconModule,
+    ExpenseListComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -23,31 +34,90 @@ export class HomeComponent {
   public currentDate = new Date();
   public dailyExpenses: Expense[] = [];
   public loading: boolean = false;
+  public categories: string[] = ['Obligatorio', 'Ocio', 'Ahorro'];
+  public canSaveForm: boolean = false;
+  public totalAmount: number = 0;
 
   public reportFilter: FormGroup = new FormGroup({
     date: new FormControl('', [Validators.required]),
   });
 
+  public expenseForm: FormGroup = new FormGroup({
+    expenses: new FormArray([])
+  });
+
   constructor(
-    private reportsService: ReportsService,
-    private userService: UserService
-  ) {}
+    private expensesSrv: ExpensesService,
+    private userService: UserService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.reportFilter.get('date')?.setValue(this.currentDate);
+    this.getExpenseReport();
   }
 
   getExpenseReport() {
     this.loading = true;
     const user_id = this.userService.getUserInSessionId();
     const date = this.formatDate();
-    this.reportsService.getReportByDay(date, user_id).subscribe((response) => {
+    this.expensesSrv.getExpensesByDay(date, user_id).subscribe((response) => {
       this.dailyExpenses = response.expense;
+      this.calcTotalAmoutOfExpenses(response.expense);
       this.loading = false;
     });
   }
 
   formatDate(): string {
     return this.reportFilter.get('date')?.value.toISOString().split('T')[0];
+  }
+
+  calcTotalAmoutOfExpenses(expenses: Expense[]) {
+    this.totalAmount = 0;
+    expenses.forEach((expense) => {
+      if (expense.category !== 'Ahorro') {
+        this.totalAmount += expense.amount;
+      }
+    });
+  }
+
+  get expenses() {
+    return this.expenseForm.get('expenses') as FormArray;
+  }
+
+  addExpense() {
+    this.expenses.push(new FormGroup({
+      amount: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      category: new FormControl('', [Validators.required]),
+    }));
+  }
+
+  removeExpense(index: number) {
+    this.expenses.removeAt(index);
+  }
+
+  submitExpenses() {
+    if (this.expenseForm.valid) {
+      this.loading = true;
+      const user_id = this.userService.getUserInSessionId();
+      const date = this.formatDate();
+
+      const body = {
+        user_id,
+        date,
+        expenses: this.expenseForm.value.expenses
+      };
+
+      this.expensesSrv.saveExpenses(body).subscribe((response) => {
+        this.snackBar.open(response.message, 'Cerrar', {
+          duration: 6000
+        });
+        this.expenseForm.reset();
+        this.expenses.clear();
+        this.loading = false;
+        this.getExpenseReport();
+      });
+    }
   }
 }

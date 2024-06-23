@@ -8,5 +8,21 @@ export interface Expense {
   description: string,
   amount: number,
   date: string,
-  category: "Obligatory" | "Other" | "Savings"
+  category: string,
+}
+
+export interface ExpenseToSaveDto {
+  user_id: string;
+  date: string;
+  expenses: ExpenseToSave[];
+}
+
+export interface ExpenseToSave {
+  amount: string;
+  description: string;
+  category: string;
+}
+
+export interface SavedExpenseDto {
+  message: string;
 }

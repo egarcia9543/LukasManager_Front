@@ -1,0 +1,57 @@
+.expense {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    padding: 1rem;
+    border: solid 1px #402B3A;
+    border-radius: 5px;
+  }
+
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &--category {
+      font-size: 16px;
+      font-weight: 500;
+      color: #402B3A;
+    }
+
+    &--icon {
+      color: #F8F4EC;
+      background-color: #D63484;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 5px;
+    }
+  }
+
+  &__content {
+    &--amount {
+      font-size: 24px;
+      font-weight: 600;
+      color: #402B3A;
+      margin-bottom: 20px;
+    }
+
+    &--description {
+      font-size: 14px;
+      font-weight: 500;
+      color: #402B3A;
+    }
+  }
+}
+
+.loss {
+  background-color: #FFC6AC;
+}
+
+.profit {
+  background-color: #C8E4B2;
+}

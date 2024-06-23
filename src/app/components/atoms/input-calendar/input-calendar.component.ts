@@ -1,28 +1,16 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MAT_DATE_FORMATS, provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
-export const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
-  },
-};
 
 @Component({
   selector: 'app-input-calendar',
   standalone: true,
   providers: [
     provideNativeDateAdapter(),
-    {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS},
+    { provide: MAT_DATE_LOCALE, useValue: 'es-CO' },
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputCalendarComponent),

@@ -12,16 +12,60 @@
   </form>
 </div>
 <div class="content">
-  @if (dailyExpenses.length == 0) {
-    <p>No hay gastos registrados para el día seleccionado</p>
-  } @else {
-    <ul>
-      @for (expense of dailyExpenses; track $index) {
-        <li>
-          <span>{{ expense.description }}</span>
-          <span>{{ expense.amount }}</span>
-        </li>
-      }
-    </ul>
+  <div class="content__header">
+    @if (dailyExpenses.length == 0) {
+      <p>Registra los gastos de este día</p>
+    } @else {
+      <p>Resumen de gastos</p>
+    }
+    <app-button
+      (click)="addExpense()"
+      [buttonText]="'Añadir'"
+    />
+  </div>
+
+  <form [formGroup]="expenseForm" (ngSubmit)="submitExpenses()" class="content__form">
+    <div formArrayName="expenses">
+      <div *ngFor="let expense of expenses.controls; let i = index">
+        <div [formGroupName]="i" class="form__wrapper">
+          <app-input
+          label="Descripción"
+          formControlName="description"
+          />
+          <app-input
+          label="Monto"
+          formControlName="amount"
+          />
+          <app-input-select
+          label="Categoría"
+          [options]="categories"
+          formControlName="category"
+          />
+          <mat-icon (click)="removeExpense(i)" class="form__icon">
+            delete
+          </mat-icon>
+        </div>
+      </div>
+    </div>
+  </form>
+  @if (expenses.length > 0) {
+    <app-button
+    [buttonText]="'Guardar'"
+    [buttonDisabled]="!expenseForm.valid"
+    [buttonType]="'submit'"
+    class="submit__button"
+    (click)="submitExpenses()"
+    />
   }
+</div>
+<div class="expenses__container">
+  @for (expense of dailyExpenses; track $index) {
+    <app-expense-list
+    [expense]="expense"
+    />
+  }
+</div>
+
+<div class="footer">
+  <p>Vaya, este día has gastado {{totalAmount | currency : 'USD': 'symbol': '1.0-0' }}</p>
 </div>

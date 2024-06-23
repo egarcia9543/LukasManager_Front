@@ -36,3 +36,21 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .user {
+    &__container {
+      &--initials {
+        display: none;
+      }
+
+      &--name {
+        display: none;
+      }
+
+      &--logout {
+        text-align: center
+      }
+    }
+  }
+}

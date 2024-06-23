@@ -9,10 +9,9 @@ aside {
 
   &__header {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     margin-top: 2em;
-    margin-left: 15%;
     color: #402B3A;
 
     &>span {
@@ -103,4 +102,45 @@ aside {
     width: 24px;
     color: #402B3A;
   }
+}
+
+@media screen and (max-width: 768px) {
+  .menu {
+    >ul {
+      padding: 0;
+      display: grid;
+      place-content: center;
+    }
+    &__header {
+      margin-left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &>span {
+        display: none;
+      }
+
+      &>img {
+        width: 40px;
+        height: 40px;
+        margin-left: 0;
+      }
+    }
+
+    &__item {
+      &::before {
+        display: none;
+      }
+    }
+
+    &__title {
+      display: none;
+    }
+
+    &__container {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
 }
