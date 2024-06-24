@@ -11,6 +11,11 @@ export interface Expense {
   category: string,
 }
 
+export interface MonthExpenses {
+  expenses: Expense[],
+  amount: number
+}
+
 export interface ExpenseToSaveDto {
   user_id: string;
   date: string;
@@ -23,6 +28,11 @@ export interface ExpenseToSave {
   category: string;
 }
 
-export interface SavedExpenseDto {
+export interface ServerResponse {
   message: string;
+}
+
+export interface ExpenseDialog {
+  title: string;
+  content: string;
 }

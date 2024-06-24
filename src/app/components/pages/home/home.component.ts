@@ -12,6 +12,7 @@ import { ButtonComponent } from '../../atoms/button/button.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExpenseListComponent } from '../../molecules/expense-list/expense-list.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-home',
@@ -25,18 +26,22 @@ import { ExpenseListComponent } from '../../molecules/expense-list/expense-list.
     InputSelectComponent,
     LoaderComponent,
     MatIconModule,
-    ExpenseListComponent
+    ExpenseListComponent,
+    MatProgressBarModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   public currentDate = new Date();
+  public isToday: boolean = true;
   public dailyExpenses: Expense[] = [];
   public loading: boolean = false;
-  public categories: string[] = ['Obligatorio', 'Ocio', 'Ahorro'];
+  public categories: string[] = ['Alimentación', 'Transporte', 'Vivienda', 'Salud y Bienestar', 'Entretenimiento y Ocio', 'Educación', 'Ropa y Accesorios', 'Familia y Mascotas', 'Ahorros e Inversiones'];
   public canSaveForm: boolean = false;
-  public totalAmount: number = 0;
+  public totalOfTheDay: number = 0;
+  public totalOfTheMonth: number = 0;
+  public averageSpended: number = 0;
 
   public reportFilter: FormGroup = new FormGroup({
     date: new FormControl('', [Validators.required]),
@@ -53,30 +58,38 @@ export class HomeComponent {
   ) { }
 
   ngOnInit(): void {
-    this.reportFilter.get('date')?.setValue(this.currentDate);
+    this.reportFilter.patchValue({ date: this.currentDate });
     this.getExpenseReport();
   }
 
   getExpenseReport() {
     this.loading = true;
     const user_id = this.userService.getUserInSessionId();
-    const date = this.formatDate();
+    const date = this.formatDate(this.reportFilter.controls['date'].value);
     this.expensesSrv.getExpensesByDay(date, user_id).subscribe((response) => {
       this.dailyExpenses = response.expense;
       this.calcTotalAmoutOfExpenses(response.expense);
       this.loading = false;
     });
+
+    if(date == this.formatDate(this.currentDate)) {
+      this.isToday = true;
+      this.getMonthExpenses();
+      this.calcAverageSpended();
+    } else {
+      this.isToday = false;
+    }
   }
 
-  formatDate(): string {
-    return this.reportFilter.get('date')?.value.toISOString().split('T')[0];
+  formatDate(date: Date): string {
+    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
   }
 
   calcTotalAmoutOfExpenses(expenses: Expense[]) {
-    this.totalAmount = 0;
+    this.totalOfTheDay = 0;
     expenses.forEach((expense) => {
       if (expense.category !== 'Ahorro') {
-        this.totalAmount += expense.amount;
+        this.totalOfTheDay += expense.amount;
       }
     });
   }
@@ -101,7 +114,7 @@ export class HomeComponent {
     if (this.expenseForm.valid) {
       this.loading = true;
       const user_id = this.userService.getUserInSessionId();
-      const date = this.formatDate();
+      const date = this.formatDate(this.reportFilter.controls['date'].value);
 
       const body = {
         user_id,
@@ -115,9 +128,34 @@ export class HomeComponent {
         });
         this.expenseForm.reset();
         this.expenses.clear();
-        this.loading = false;
         this.getExpenseReport();
+        this.loading = false;
       });
     }
+  }
+
+  deleteExpense(expense_id: string) {
+    this.loading = true;
+    this.expensesSrv.deleteExpense(expense_id).subscribe((response) => {
+      this.snackBar.open(response.message, 'Cerrar', {
+        duration: 6000
+      });
+      this.getExpenseReport();
+      this.loading = false;
+    });
+  }
+
+  getMonthExpenses() {
+    const user_id = this.userService.getUserInSessionId();
+    const date = this.formatDate(this.currentDate);
+    this.expensesSrv.getMonthlyExpenses(date, user_id).subscribe((response) => {
+      this.totalOfTheMonth = response.amount;
+      this.loading = false;
+    });
+  }
+
+  calcAverageSpended() {
+    const salary = this.userService.getUserInSession().salary;
+    this.averageSpended = (this.totalOfTheMonth / salary) * 100;
   }
 }

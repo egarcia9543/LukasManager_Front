@@ -1,9 +1,9 @@
-<div [className]="expense.category == 'Obligatorio' || expense.category == 'Ocio'? 'expense__container loss': 'expense__container profit'">
+<div [className]="expense.category !== 'Ahorros e Inversiones'? 'expense__container loss': 'expense__container profit'">
   <div class="expense__header">
     <p class="expense__header--category">{{expense.category}}</p>
     <div class="expense__header--icon">
-      <mat-icon>
-        attach_money
+      <mat-icon (click)="openDialog()">
+        close
       </mat-icon>
     </div>
   </div>
