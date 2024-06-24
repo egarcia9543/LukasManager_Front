@@ -1,0 +1,40 @@
+<app-loader [showSpinner]="loading"></app-loader>
+<div class="main">
+  <div class="form__container">
+    <h1 class="form__title"><b>Inicia sesión</b></h1>
+    <div class="form__container--inner">
+      <div class="form__img-container">
+        <img src="../../../../assets/imgs/piggie-bank.svg" alt="Piggie bank">
+      </div>
+
+      <form class="form__inputs-container" [formGroup]="loginForm" (submit)="login()">
+        <div>
+          <div class="grid__col-2">
+            <app-input
+              [label]="'Correo electrónico'"
+              [inputType]="'email'"
+              [placeholder]="'email@mail.com'"
+              formControlName="email"
+            />
+
+            <app-input
+              [label]="'Contraseña'"
+              [inputType]="'password'"
+              [placeholder]="'*******'"
+              formControlName="password"
+            />
+          </div>
+        </div>
+
+        <app-button
+          [buttonDisabled]="loginForm.invalid"
+          [buttonType]="'submit'"
+          [buttonText]="'Enviar'"
+          class="form__button"
+        />
+        <h4>Si aún no tienes cuenta, <a href="sign-up">creala aquí</a></h4>
+      </form>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,20 @@
+<aside>
+  <div class="menu__header">
+    <span class="menu__header--title">Luka'$ Manager</span>
+    <img src="../.././../../assets/imgs/piggy.png" alt="">
+  </div>
+  <nav class="menu">
+    <ul>
+      @for (item of menuItems; track $index) {
+        <li class="menu__item" [routerLink]="item.route" [routerLinkActive]="['menu__item--active']">
+          <section class="menu__container">
+            <div class="menu__circle">
+              <mat-icon class="menu__icon">{{item.icon}}</mat-icon>
+            </div>
+            <span class="menu__title">{{item.name}}</span>
+          </section>
+        </li>
+      }
+    </ul>
+  </nav>
+</aside>
