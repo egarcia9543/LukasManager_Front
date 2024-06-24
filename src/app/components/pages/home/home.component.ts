@@ -63,6 +63,7 @@ export class HomeComponent {
   }
 
   getExpenseReport() {
+    console.log('hhhh')
     this.loading = true;
     const user_id = this.userService.getUserInSessionId();
     const date = this.formatDate(this.reportFilter.controls['date'].value);
@@ -75,7 +76,6 @@ export class HomeComponent {
     if(date == this.formatDate(this.currentDate)) {
       this.isToday = true;
       this.getMonthExpenses();
-      this.calcAverageSpended();
     } else {
       this.isToday = false;
     }
@@ -126,7 +126,6 @@ export class HomeComponent {
         this.snackBar.open(response.message, 'Cerrar', {
           duration: 6000
         });
-        this.expenseForm.reset();
         this.expenses.clear();
         this.getExpenseReport();
         this.loading = false;
@@ -150,12 +149,13 @@ export class HomeComponent {
     const date = this.formatDate(this.currentDate);
     this.expensesSrv.getMonthlyExpenses(date, user_id).subscribe((response) => {
       this.totalOfTheMonth = response.amount;
-      this.loading = false;
+      this.calcAverageSpended();
     });
   }
 
   calcAverageSpended() {
     const salary = this.userService.getUserInSession().salary;
     this.averageSpended = (this.totalOfTheMonth / salary) * 100;
+    console.log(salary, this.totalOfTheMonth, this.averageSpended)
   }
 }
