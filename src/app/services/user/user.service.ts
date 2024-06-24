@@ -30,4 +30,8 @@ export class UserService {
   public getUserInSession(): User {
     return JSON.parse(sessionStorage.getItem('user') ?? '');
   };
+
+  public getUserInSessionId(): string {
+    return this.getUserInSession()._id;
+  }
 }

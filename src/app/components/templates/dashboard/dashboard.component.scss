@@ -25,3 +25,11 @@
     margin: 2em 2em;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    &__bottom {
+      left: 1%;
+    }
+  }
+}
