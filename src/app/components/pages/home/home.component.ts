@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExpenseListComponent } from '../../molecules/expense-list/expense-list.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ExpenseGraphComponent } from '../../molecules/expense-graph/expense-graph.component';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     LoaderComponent,
     MatIconModule,
     ExpenseListComponent,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ExpenseGraphComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -41,6 +43,7 @@ export class HomeComponent {
   public canSaveForm: boolean = false;
   public totalOfTheDay: number = 0;
   public totalOfTheMonth: number = 0;
+  public totalExpenses: any = [];
   public averageSpended: number = 0;
 
   public reportFilter: FormGroup = new FormGroup({
@@ -63,7 +66,6 @@ export class HomeComponent {
   }
 
   getExpenseReport() {
-    console.log('hhhh')
     this.loading = true;
     const user_id = this.userService.getUserInSessionId();
     const date = this.formatDate(this.reportFilter.controls['date'].value);
@@ -148,6 +150,8 @@ export class HomeComponent {
     const user_id = this.userService.getUserInSessionId();
     const date = this.formatDate(this.currentDate);
     this.expensesSrv.getMonthlyExpenses(date, user_id).subscribe((response) => {
+      this.totalExpenses = response.expenses.map(expense => ({ name: expense.category, value: expense.amount }));
+      console.log(this.totalExpenses)
       this.totalOfTheMonth = response.amount;
       this.calcAverageSpended();
     });
@@ -156,6 +160,5 @@ export class HomeComponent {
   calcAverageSpended() {
     const salary = this.userService.getUserInSession().salary;
     this.averageSpended = (this.totalOfTheMonth / salary) * 100;
-    console.log(salary, this.totalOfTheMonth, this.averageSpended)
   }
 }
