@@ -40,8 +40,13 @@ body {
 }
 
 body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #F8F4EC;
+}
+
+body.mat-typography app-expense-graph {
+  font-family: initial;
+  font-size: initial;
+  line-height: initial;
 }
 
 // colors

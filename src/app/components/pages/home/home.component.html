@@ -71,7 +71,8 @@
 <div class="footer">
   <p>Vaya, este día has gastado {{totalOfTheDay | currency : 'USD': 'symbol': '1.0-0' }}</p>
   @if(isToday) {
-    <p>Este mes has gastado: {{totalOfTheMonth | currency : 'USD': 'symbol': '1.0-0'}}</p>
-    <mat-progress-bar mode="determinate" [value]="averageSpended"></mat-progress-bar>
+    <app-expense-graph
+      [graphData]="totalExpenses"
+    />
   }
 </div>
