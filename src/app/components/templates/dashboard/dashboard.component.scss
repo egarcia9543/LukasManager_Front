@@ -22,7 +22,9 @@
 .content {
   &__wrapper {
     width: 85%;
+    overflow: auto;
     margin: 2em 1em;
+    position: relative;
   }
 }
 
