@@ -29,7 +29,6 @@ import { ExpenseGraphComponent } from '../../molecules/expense-graph/expense-gra
     MatIconModule,
     ExpenseListComponent,
     MatProgressBarModule,
-    ExpenseGraphComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -151,7 +150,6 @@ export class HomeComponent {
     const date = this.formatDate(this.currentDate);
     this.expensesSrv.getMonthlyExpenses(date, user_id).subscribe((response) => {
       this.totalExpenses = response.expenses.map(expense => ({ name: expense.category, value: expense.amount }));
-      console.log(this.totalExpenses)
       this.totalOfTheMonth = response.amount;
       this.calcAverageSpended();
     });
