@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { InputComponent } from '../../atoms/input/input.component';
-import { ButtonComponent } from '../../atoms/button/button.component';
-import { LoaderComponent } from '../../atoms/loader/loader.component';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../../services/user/user.service';
+
 import { Router, RouterModule } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ButtonComponent } from '../../components/atoms/button/button.component';
+import { InputComponent } from '../../components/atoms/input/input.component';
+import { LoaderComponent } from '../../components/atoms/loader/loader.component';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-login',

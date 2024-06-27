@@ -23,6 +23,8 @@ export class InputComponent implements ControlValueAccessor {
   @Input() inputType: string = '';
   @Input() placeholder: string = '';
   @Input() label: string = '';
+  @Input() maxVal: number = 0;
+  @Input() minVal: number = 0;
 
   public onChange: any = () => {};
 

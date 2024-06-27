@@ -1,6 +1,6 @@
 <div [className]="expense.category !== 'Ahorros e Inversiones'? 'expense__container loss': 'expense__container profit'">
   <div class="expense__header">
-    <p class="expense__header--category">{{expense.category}}</p>
+    <p class="expense__header--category">{{expense.description}}</p>
     <div class="expense__header--icon">
       <mat-icon (click)="openDialog()">
         close
@@ -11,6 +11,6 @@
     {{expense.amount | currency: 'USD': 'symbol': '1.0-0'}}
   </p>
   <p class="expense__content--description">
-    {{expense.description}}
+    {{expense.category}}
   </p>
 </div>

@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Expense } from '../../../interfaces/expense.interface';
-import { ExpensesService } from '../../../services/expenses/expenses.service';
-import { UserService } from '../../../services/user/user.service';
-import { InputCalendarComponent } from '../../atoms/input-calendar/input-calendar.component';
-import { LoaderComponent } from '../../atoms/loader/loader.component';
-import { InputComponent } from '../../atoms/input/input.component';
-import { InputSelectComponent } from '../../atoms/input-select/input-select.component';
-import { ButtonComponent } from '../../atoms/button/button.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ExpenseListComponent } from '../../molecules/expense-list/expense-list.component';
+import { ButtonComponent } from '../../components/atoms/button/button.component';
+import { InputCalendarComponent } from '../../components/atoms/input-calendar/input-calendar.component';
+import { InputSelectComponent } from '../../components/atoms/input-select/input-select.component';
+import { InputComponent } from '../../components/atoms/input/input.component';
+import { LoaderComponent } from '../../components/atoms/loader/loader.component';
+import { ExpenseListComponent } from '../../components/molecules/expense-list/expense-list.component';
+import { Expense } from '../../interfaces/expense.interface';
+import { ExpensesService } from '../../services/expenses/expenses.service';
+import { UserService } from '../../services/user/user.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ExpenseGraphComponent } from '../../molecules/expense-graph/expense-graph.component';
+import { Categories } from '../../../constants/categories.constants';
+
 
 @Component({
   selector: 'app-home',
@@ -38,7 +39,7 @@ export class HomeComponent {
   public isToday: boolean = true;
   public dailyExpenses: Expense[] = [];
   public loading: boolean = false;
-  public categories: string[] = ['Alimentación', 'Transporte', 'Vivienda', 'Salud y Bienestar', 'Entretenimiento y Ocio', 'Educación', 'Ropa y Accesorios', 'Familia y Mascotas', 'Ahorros e Inversiones'];
+  public categories: string[] = Categories;
   public canSaveForm: boolean = false;
   public totalOfTheDay: number = 0;
   public totalOfTheMonth: number = 0;

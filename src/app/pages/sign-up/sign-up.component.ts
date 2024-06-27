@@ -4,11 +4,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
 import { catchError, debounceTime } from 'rxjs';
-import { UserService } from '../../../services/user/user.service';
-import { ButtonComponent } from '../../atoms/button/button.component';
-import { InputComponent } from '../../atoms/input/input.component';
-import { LoaderComponent } from '../../atoms/loader/loader.component';
+
 import { CommonModule } from '@angular/common';
+import { InputComponent } from '../../components/atoms/input/input.component';
+import { ButtonComponent } from '../../components/atoms/button/button.component';
+import { LoaderComponent } from '../../components/atoms/loader/loader.component';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-sign-up',

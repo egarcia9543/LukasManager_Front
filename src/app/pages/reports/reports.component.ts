@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { InputCalendarComponent } from '../../atoms/input-calendar/input-calendar.component';
-import { ExpenseGraphComponent } from '../../molecules/expense-graph/expense-graph.component';
-import { ExpensesService } from '../../../services/expenses/expenses.service';
-import { UserService } from '../../../services/user/user.service';
+import { ExpenseGraphComponent } from '../../components/molecules/expense-graph/expense-graph.component';
+import { ExpensesService } from '../../services/expenses/expenses.service';
+import { UserService } from '../../services/user/user.service';
+
 
 @Component({
   selector: 'app-reports',

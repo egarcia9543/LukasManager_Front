@@ -30,6 +30,11 @@ export class SidebarComponent {
         icon: 'data_thresholding',
         route: 'reports'
       },
+      {
+        name: 'Pagos',
+        icon: 'paid',
+        route: 'payments'
+      }
     ]
   }
 }
