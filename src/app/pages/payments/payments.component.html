@@ -1,0 +1,64 @@
+<app-loader [showSpinner]="loading"/>
+<div class="content">
+  <div class="content__header">
+    <h2>Gestión de pagos mensuales</h2>
+    <app-button
+      (click)="addPayment()"
+      [buttonText]="'Añadir'"
+    ></app-button>
+  </div>
+  <form (ngSubmit)="submitPayments()">
+    <div [formGroup]="paymentsForm" class="content__form">
+      <div formArrayName="payments">
+        <div *ngFor="let payment of payments.controls; let i = index" [formGroupName]="i" class="form__wrapper">
+          <app-input
+            label="Descripción"
+            formControlName="description"
+          ></app-input>
+          <app-input
+            label="Monto"
+            formControlName="amount"
+            [inputType]="'number'"
+          ></app-input>
+          <app-input-select
+            label="Categoría"
+            formControlName="category"
+            [options]="categories"
+          ></app-input-select>
+          <app-input
+            label="Día de pago"
+            formControlName="paymentDay"
+            [inputType]="'number'"
+            [minVal]="1"
+            [maxVal]="31"
+          />
+          <mat-icon  class="form__icon" (click)="removePayment(i)">
+            delete
+          </mat-icon>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="submit__button">
+    <app-button
+    *ngIf="payments.controls.length > 0"
+    (click)="submitPayments()"
+    [buttonType]="'submit'"
+    [buttonText]="'Añadir'"
+    [buttonDisabled]="!paymentsForm.valid"
+    class="submit__button"
+    />
+  </div>
+    <mat-divider></mat-divider>
+  <div class="expenses__container" *ngIf="userPayments.length > 0">
+    @for(payment of userPayments; track $index) {
+      <app-expense-list
+        [expense]="payment"
+        (expenseToDelete)="deletePayment($event)"
+      />
+    }
+  </div>
+  <div class="footer">
+    <p *ngIf="userPayments.length > 0">Durante el mes estás pagando un total de {{userPaymentsAmount | currency : 'USD': 'symbol': '1.0-0'}}</p>
+  </div>
+</div>
